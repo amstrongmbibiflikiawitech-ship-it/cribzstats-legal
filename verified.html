@@ -65,5 +65,23 @@
     <p class="fr">Votre adresse e-mail est vérifiée. Revenez dans l'application CribzStats et connectez-vous.</p>
     <div class="foot">CribzStats, a CribzConnect product.</div>
   </div>
+  <script>
+    // If Supabase redirected here with an error (e.g. an expired link), show that
+    // instead of the success message. Params can be in the query or the hash.
+    (function () {
+      var q = (location.search + '&' + location.hash.replace('#', '&'));
+      if (/[?&]error/.test(q)) {
+        var m = q.match(/error_description=([^&]*)/);
+        var desc = m ? decodeURIComponent(m[1].replace(/\+/g, ' ')) : 'This confirmation link is invalid or has expired.';
+        document.querySelector('.check').innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="#C0532E" stroke-width="3" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg>';
+        document.querySelector('.check').style.background = '#F9E7E2';
+        document.querySelector('h1').textContent = 'Link expired';
+        document.querySelector('h1').style.color = '#0F3D35';
+        document.querySelector('.card p').innerHTML = desc + ' Open CribzStats and request a new confirmation email by signing up again.';
+        document.querySelector('.hint').textContent = 'Return to CribzStats to try again.';
+        document.querySelector('.fr').textContent = 'Ce lien de confirmation est invalide ou a expiré. Réessayez depuis l\'application CribzStats.';
+      }
+    })();
+  </script>
 </body>
 </html>
